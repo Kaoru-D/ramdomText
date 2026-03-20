@@ -6,11 +6,25 @@ const App = () => {
 
   const [count, setCount] = useState(1);
   const [text, setText] = useState([]);
+  const [singleParagraph, setSingleParagraph] = useState(false);
 
   const handleSubmit = (e)=>{
     e.preventDefault();
     let amount = parseInt(count);
     setText(data.slice(0,amount));
+  }
+
+  const handleRandomOne = ()=>{
+    setSingleParagraph(true);
+    setText([data[Math.floor(Math.random()*data.length)]]);
+  }
+
+  const handleSingleOne = ()=>{
+    const index = parseInt(count) - 1;
+    if(index >= 0 && index < data.length){
+      setSingleParagraph(true);
+      setText([data[index]]);
+    }
   }
 
   return (
@@ -20,7 +34,13 @@ const App = () => {
         <label htmlFor="amount">párrafos</label>
         <input type="number" name="amount" id="amount" min='1' step='1' max='14' value={count} onChange={(e)=>{setCount(e.target.value)}}/>
         <button type="submit" className="btn">
-          Generar
+          mostrar hasta el párrafo {count}
+        </button>
+        <button type="button" className="btn" onClick={handleRandomOne}>
+          párrafo aleatorio
+        </button>
+        <button type="button" className="btn" onClick={handleSingleOne}>
+          mostrar solo párrafo número {count}
         </button>
       </form>
       <article className="lorem-text">

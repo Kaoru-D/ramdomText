@@ -6,21 +6,22 @@ const App = () => {
 
   const [count, setCount] = useState(1);
   const [text, setText] = useState([]);
-  const [singleParagraph, setSingleParagraph] = useState(false);
+  const [ setSingleParagraph] = useState(false);
 
   const handleSubmit = (e)=>{
     e.preventDefault();
-    let amount = parseInt(count);
+    let amount = Number.parseInt(count);
     setText(data.slice(0,amount));
   }
 
   const handleRandomOne = ()=>{
-    setSingleParagraph(true);
-    setText([data[Math.floor(Math.random()*data.length)]]);
+    const randomIndex = Math.floor(Math.random() * data.length);
+    setCount(randomIndex + 1);
+    setText([data[randomIndex]]);
   }
 
   const handleSingleOne = ()=>{
-    const index = parseInt(count) - 1;
+    const index = Number.parseInt(count) - 1;
     if(index >= 0 && index < data.length){
       setSingleParagraph(true);
       setText([data[index]]);
@@ -32,15 +33,15 @@ const App = () => {
       <h4> ¿Cansado de textos génericos y aburridos? </h4>
       <form className="lorem-form" onSubmit={handleSubmit}>
         <label htmlFor="amount">párrafos</label>
-        <input type="number" name="amount" id="amount" min='1' step='1' max='14' value={count} onChange={(e)=>{setCount(e.target.value)}}/>
+        <input type="number" name="amount" id="amount" min='1' step='1' max={data.length} value={count} onChange={(e)=>{setCount(Number(e.target.value))}}/>
         <button type="submit" className="btn">
           mostrar hasta el párrafo {count}
         </button>
         <button type="button" className="btn" onClick={handleRandomOne}>
-          párrafo aleatorio
+          Mostrar párrafo aleatorio
         </button>
         <button type="button" className="btn" onClick={handleSingleOne}>
-          mostrar solo párrafo número {count}
+          mostrar solo el párrafo número {count}
         </button>
       </form>
       <article className="lorem-text">
